@@ -1,0 +1,15 @@
+    body, table, p, div, span, form, input, textarea, select, pre, button, a
+    {
+        font-family: "微軟正黑體" , "Microsoft JhengHei" , "新細明體" , "PMingLiU" , AppleGothic, Dotum, Lucida Grande, Verdana Sans-serif;
+        color: #fff;
+        font-size: 14pt;
+        line-height: 22pt;
+    }
+    body{
+    	padding:0 10px 10px 10px;
+    }
+    h3{
+    	text-align: center;
+    	margin:10px;
+        color:#B30404;
+    }

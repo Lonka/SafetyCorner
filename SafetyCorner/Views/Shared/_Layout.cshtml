@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/reset.css")
+    @Styles.Render("~/Content/style.css")
+</head>
+<body>
+    <!-- 左方快速連結 -->
+    @{Html.RenderAction("Navigation", "Home");}
+    <!-- end 左方快速連結 -->
+    <div class="main">
+    @{Html.RenderAction("Menu", "Home");}
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/main.js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

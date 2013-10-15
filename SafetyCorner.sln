@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafetyCorner", "SafetyCorner\SafetyCorner.csproj", "{4B7E2FC4-473F-4244-A324-CE20697F3803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafetyCorner.Model", "SafetyCorner.Model\SafetyCorner.Model.csproj", "{8AF987ED-4260-4E57-A936-4878AB20C684}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SafetyCorner.Model", "SafetyCorner.Models\SafetyCorner.Models.csproj", "{8AF987ED-4260-4E57-A936-4878AB20C684}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

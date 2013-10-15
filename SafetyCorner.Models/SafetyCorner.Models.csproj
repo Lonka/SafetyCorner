@@ -8,8 +8,8 @@
     <ProjectGuid>{8AF987ED-4260-4E57-A936-4878AB20C684}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SafetyCorner.Model</RootNamespace>
-    <AssemblyName>SafetyCorner.Model</AssemblyName>
+    <RootNamespace>SafetyCorner.Models</RootNamespace>
+    <AssemblyName>SafetyCorner.Models</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity">
       <Private>True</Private>
@@ -51,6 +52,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,11 +60,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DataAccess.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\PersonRepository.cs" />
+    <Compile Include="SafetyCorner.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SafetyCorner.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SafetyCorner.Context.Extensions.cs">
+      <DependentUpon>SafetyCorner.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SafetyCorner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SafetyCorner.tt</DependentUpon>
+    </Compile>
     <Compile Include="SafetyCornerEntity.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SafetyCornerEntity.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Test.cs">
+      <DependentUpon>SafetyCorner.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +104,20 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SafetyCornerEntity.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="SafetyCorner.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SafetyCorner.Context.cs</LastGenOutput>
+    </None>
+    <None Include="SafetyCorner.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SafetyCorner.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

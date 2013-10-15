@@ -234,6 +234,12 @@
   <ItemGroup>
     <Content Include="Views\Home\Menu.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SafetyCorner.Models\SafetyCorner.Models.csproj">
+      <Project>{8AF987ED-4260-4E57-A936-4878AB20C684}</Project>
+      <Name>SafetyCorner.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SafetyCorner.ViewModels;
+using SafetyCorner.Models.Repository;
+
 namespace SafetyCorner.Controllers
 {
     public class HomeController : Controller
@@ -13,6 +15,9 @@ namespace SafetyCorner.Controllers
 
         public ActionResult Index()
         {
+            PersonRepository db = new PersonRepository();
+            List<SafetyCorner.Models.Test> dt = db.GetAll().ToList();
+            System.Data.DataSet ds = db.Test();
             return View();
         }
 

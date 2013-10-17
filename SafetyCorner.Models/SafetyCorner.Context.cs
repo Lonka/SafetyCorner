@@ -77,11 +77,11 @@ namespace SafetyCorner.Models
     
         #region ObjectSet 屬性
     
-        public ObjectSet<Test> Tests
+        public ObjectSet<Quicklink> Quicklinks
         {
-            get { return _tests  ?? (_tests = CreateObjectSet<Test>("Tests")); }
+            get { return _quicklinks  ?? (_quicklinks = CreateObjectSet<Quicklink>("Quicklinks")); }
         }
-        private ObjectSet<Test> _tests;
+        private ObjectSet<Quicklink> _quicklinks;
 
         #endregion
     }

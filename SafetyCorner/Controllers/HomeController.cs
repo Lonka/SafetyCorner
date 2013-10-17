@@ -13,26 +13,20 @@ namespace SafetyCorner.Controllers
         //
         // GET: /Home/
 
+        QuickLinkRepository db = new QuickLinkRepository();
+
         public ActionResult Index()
         {
-            PersonRepository db = new PersonRepository();
-            List<SafetyCorner.Models.Test> dt = db.GetAll().ToList();
-            System.Data.DataSet ds = db.Test();
+            //PersonRepository db = new PersonRepository();
+            //List<SafetyCorner.Models.Test> dt = db.GetAll().ToList();
+            //System.Data.DataSet ds = db.Test();
             return View();
         }
 
         public ActionResult Navigation()
         {
-            var NavigationItems = new List<NavigationItem>()
-            {
-                new NavigationItem(){ Title="勞委會", Href="http://www.cla.gov.tw/" , Target="_blank", Text="勞委會" },
-                new NavigationItem(){ Title="勞研所", Href="http://www.iosh.gov.tw/" , Target="_blank", Text="勞研所" },
-                new NavigationItem(){ Title="北檢所", Href="http://www.nlio.gov.tw/" , Target="_blank", Text="北檢所" },
-                new NavigationItem(){ Title="消防署", Href="http://www.nfa.gov.tw/" , Target="_blank", Text="消防署" },
-                new NavigationItem(){ Title="全球化學品調和制度", Href="http://ghs.cla.gov.tw/" , Target="_blank", Text="全球化學品調和制度" },
-                new NavigationItem(){ Title="全國資料庫", Href="http://law.moj.gov.tw/" , Target="_blank", Text="全國資料庫" }
-            };
-            return PartialView(NavigationItems);
+            var quickLinks = db.GetSome(item => item.Enabled.Value.Equals(1));
+            return PartialView(quickLinks);
         }
 
         public ActionResult Menu()

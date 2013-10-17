@@ -4,31 +4,46 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SafetyCornerModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="SafetyCornerModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="SafetyCornerModelStoreContainer">
-          <EntitySet Name="Test" EntityType="SafetyCornerModel.Store.Test" store:Type="Tables" />
+          <EntitySet Name="Quicklink" EntityType="SafetyCornerModel.Store.Quicklink" store:Type="Tables" />
         </EntityContainer>
-        <EntityType Name="Test">
+        <EntityType Name="Quicklink">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
+          <Property Name="Modify_Date" Type="datetime" />
+          <Property Name="Modify_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Create_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Enabled" Type="integer" />
           <Property Name="ID" Type="integer" Nullable="false" />
-          <Property Name="test" Type="nvarchar" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Href" Type="nvarchar" MaxLength="100" />
+          <Property Name="Target" Type="varchar" />
+          <Property Name="Text" Type="nvarchar" MaxLength="100" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SafetyCornerModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="SafetyCornerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Tests" EntityType="SafetyCornerModel.Test" />
+          <EntitySet Name="Quicklinks" EntityType="SafetyCornerModel.Quicklink" />
         </EntityContainer>
-        <EntityType Name="Test">
+        <EntityType Name="Quicklink">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" />
-          <Property Name="test1" Type="String" MaxLength="2147483647" Unicode="true" FixedLength="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Href" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Text" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Modify_Date" />
+          <Property Type="String" Name="Modify_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Create_Date" />
+          <Property Type="String" Name="Create_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="Enabled" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -36,10 +51,22 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SafetyCornerModelStoreContainer" CdmEntityContainer="SafetyCornerEntities">
-          <EntitySetMapping Name="Tests"><EntityTypeMapping TypeName="SafetyCornerModel.Test"><MappingFragment StoreEntitySet="Test">
-            <ScalarProperty Name="ID" ColumnName="ID" />
-            <ScalarProperty Name="test1" ColumnName="test" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Quicklinks">
+            <EntityTypeMapping TypeName="SafetyCornerModel.Quicklink">
+              <MappingFragment StoreEntitySet="Quicklink">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Create_User" ColumnName="Create_User" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Href" ColumnName="Href" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -54,7 +81,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
       </DesignerInfoPropertySet>
@@ -62,7 +89,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="SafetyCornerEntity">
-        <EntityTypeShape EntityType="SafetyCornerModel.Test" Width="1.5" PointX="0.75" PointY="0.75" Height="1.4033821614583331" IsExpanded="true" />
+        <EntityTypeShape EntityType="SafetyCornerModel.Quicklink" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333326" />
       </Diagram>
     </Diagrams>
   </Designer>

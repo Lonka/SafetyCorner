@@ -18,7 +18,7 @@ using System.Runtime.Serialization;
 namespace SafetyCorner.Models
 {
     [DataContract(IsReference = true)]
-    public partial class Test: IObjectWithChangeTracker, INotifyPropertyChanged
+    public partial class Quicklink: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region 基本屬性
     
@@ -42,19 +42,139 @@ namespace SafetyCorner.Models
         private long _iD;
     
         [DataMember]
-        public string test1
+        public string Title
         {
-            get { return _test1; }
+            get { return _title; }
             set
             {
-                if (_test1 != value)
+                if (_title != value)
                 {
-                    _test1 = value;
-                    OnPropertyChanged("test1");
+                    _title = value;
+                    OnPropertyChanged("Title");
                 }
             }
         }
-        private string _test1;
+        private string _title;
+    
+        [DataMember]
+        public string Href
+        {
+            get { return _href; }
+            set
+            {
+                if (_href != value)
+                {
+                    _href = value;
+                    OnPropertyChanged("Href");
+                }
+            }
+        }
+        private string _href;
+    
+        [DataMember]
+        public string Target
+        {
+            get { return _target; }
+            set
+            {
+                if (_target != value)
+                {
+                    _target = value;
+                    OnPropertyChanged("Target");
+                }
+            }
+        }
+        private string _target;
+    
+        [DataMember]
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                if (_text != value)
+                {
+                    _text = value;
+                    OnPropertyChanged("Text");
+                }
+            }
+        }
+        private string _text;
+    
+        [DataMember]
+        public Nullable<System.DateTime> Modify_Date
+        {
+            get { return _modify_Date; }
+            set
+            {
+                if (_modify_Date != value)
+                {
+                    _modify_Date = value;
+                    OnPropertyChanged("Modify_Date");
+                }
+            }
+        }
+        private Nullable<System.DateTime> _modify_Date;
+    
+        [DataMember]
+        public string Modify_User
+        {
+            get { return _modify_User; }
+            set
+            {
+                if (_modify_User != value)
+                {
+                    _modify_User = value;
+                    OnPropertyChanged("Modify_User");
+                }
+            }
+        }
+        private string _modify_User;
+    
+        [DataMember]
+        public Nullable<System.DateTime> Create_Date
+        {
+            get { return _create_Date; }
+            set
+            {
+                if (_create_Date != value)
+                {
+                    _create_Date = value;
+                    OnPropertyChanged("Create_Date");
+                }
+            }
+        }
+        private Nullable<System.DateTime> _create_Date;
+    
+        [DataMember]
+        public string Create_User
+        {
+            get { return _create_User; }
+            set
+            {
+                if (_create_User != value)
+                {
+                    _create_User = value;
+                    OnPropertyChanged("Create_User");
+                }
+            }
+        }
+        private string _create_User;
+    
+        [DataMember]
+        public Nullable<long> Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                if (_enabled != value)
+                {
+                    _enabled = value;
+                    OnPropertyChanged("Enabled");
+                }
+            }
+        }
+        private Nullable<long> _enabled;
 
         #endregion
         #region ChangeTracking

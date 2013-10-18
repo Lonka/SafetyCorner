@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SafetyCorner.ViewModels;
 using SafetyCorner.Models.Repository;
 
 namespace SafetyCorner.Controllers
@@ -13,7 +12,6 @@ namespace SafetyCorner.Controllers
         //
         // GET: /Home/
 
-        QuickLinkRepository db = new QuickLinkRepository();
 
         public ActionResult Index()
         {
@@ -23,17 +21,18 @@ namespace SafetyCorner.Controllers
             return View();
         }
 
-        public ActionResult Navigation()
+        public ActionResult QuickLink()
         {
-            var quickLinks = db.GetSome(item => item.Enabled.Value.Equals(1));
+            QuickLinkRepository db = new QuickLinkRepository();
+            var quickLinks = db.GetSome(item => item.Enabled.Value.Equals(1)).OrderBy(item => item.Sort_Num);
             return PartialView(quickLinks);
         }
 
         public ActionResult Menu()
         {
-            var menuItems = new List<MenuItem>();
-            
-            return PartialView();
+            MenuListRepository db = new MenuListRepository();
+            var menuItems = db.GetSome(item => item.Enabled.Value.Equals(1)).OrderBy(item => item.Title_ID).OrderBy(item => item.Sort_Num);
+            return PartialView(menuItems);
         }
 
     }

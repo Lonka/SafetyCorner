@@ -77,6 +77,12 @@ namespace SafetyCorner.Models
     
         #region ObjectSet 屬性
     
+        public ObjectSet<MenuList> MenuLists
+        {
+            get { return _menuLists  ?? (_menuLists = CreateObjectSet<MenuList>("MenuLists")); }
+        }
+        private ObjectSet<MenuList> _menuLists;
+    
         public ObjectSet<Quicklink> Quicklinks
         {
             get { return _quicklinks  ?? (_quicklinks = CreateObjectSet<Quicklink>("Quicklinks")); }

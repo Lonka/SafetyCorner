@@ -18,99 +18,39 @@ using System.Runtime.Serialization;
 namespace SafetyCorner.Models
 {
     [DataContract(IsReference = true)]
-    public partial class Quicklink: IObjectWithChangeTracker, INotifyPropertyChanged
+    public partial class MenuList: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region 基本屬性
     
         [DataMember]
-        public Nullable<decimal> Sort_Num
+        public string Controller
         {
-            get { return _sort_Num; }
+            get { return _controller; }
             set
             {
-                if (_sort_Num != value)
+                if (_controller != value)
                 {
-                    _sort_Num = value;
-                    OnPropertyChanged("Sort_Num");
+                    _controller = value;
+                    OnPropertyChanged("Controller");
                 }
             }
         }
-        private Nullable<decimal> _sort_Num;
+        private string _controller;
     
         [DataMember]
-        public Nullable<System.DateTime> Modify_Date
+        public string Action
         {
-            get { return _modify_Date; }
+            get { return _action; }
             set
             {
-                if (_modify_Date != value)
+                if (_action != value)
                 {
-                    _modify_Date = value;
-                    OnPropertyChanged("Modify_Date");
+                    _action = value;
+                    OnPropertyChanged("Action");
                 }
             }
         }
-        private Nullable<System.DateTime> _modify_Date;
-    
-        [DataMember]
-        public string Modify_User
-        {
-            get { return _modify_User; }
-            set
-            {
-                if (_modify_User != value)
-                {
-                    _modify_User = value;
-                    OnPropertyChanged("Modify_User");
-                }
-            }
-        }
-        private string _modify_User;
-    
-        [DataMember]
-        public Nullable<System.DateTime> Create_Date
-        {
-            get { return _create_Date; }
-            set
-            {
-                if (_create_Date != value)
-                {
-                    _create_Date = value;
-                    OnPropertyChanged("Create_Date");
-                }
-            }
-        }
-        private Nullable<System.DateTime> _create_Date;
-    
-        [DataMember]
-        public string Create_User
-        {
-            get { return _create_User; }
-            set
-            {
-                if (_create_User != value)
-                {
-                    _create_User = value;
-                    OnPropertyChanged("Create_User");
-                }
-            }
-        }
-        private string _create_User;
-    
-        [DataMember]
-        public Nullable<long> Enabled
-        {
-            get { return _enabled; }
-            set
-            {
-                if (_enabled != value)
-                {
-                    _enabled = value;
-                    OnPropertyChanged("Enabled");
-                }
-            }
-        }
-        private Nullable<long> _enabled;
+        private string _action;
     
         [DataMember]
         public long ID
@@ -132,34 +72,19 @@ namespace SafetyCorner.Models
         private long _iD;
     
         [DataMember]
-        public string Title
+        public string Text
         {
-            get { return _title; }
+            get { return _text; }
             set
             {
-                if (_title != value)
+                if (_text != value)
                 {
-                    _title = value;
-                    OnPropertyChanged("Title");
+                    _text = value;
+                    OnPropertyChanged("Text");
                 }
             }
         }
-        private string _title;
-    
-        [DataMember]
-        public string Href
-        {
-            get { return _href; }
-            set
-            {
-                if (_href != value)
-                {
-                    _href = value;
-                    OnPropertyChanged("Href");
-                }
-            }
-        }
-        private string _href;
+        private string _text;
     
         [DataMember]
         public string Target
@@ -177,19 +102,139 @@ namespace SafetyCorner.Models
         private string _target;
     
         [DataMember]
-        public string Text
+        public string Href
         {
-            get { return _text; }
+            get { return _href; }
             set
             {
-                if (_text != value)
+                if (_href != value)
                 {
-                    _text = value;
-                    OnPropertyChanged("Text");
+                    _href = value;
+                    OnPropertyChanged("Href");
                 }
             }
         }
-        private string _text;
+        private string _href;
+    
+        [DataMember]
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                if (_title != value)
+                {
+                    _title = value;
+                    OnPropertyChanged("Title");
+                }
+            }
+        }
+        private string _title;
+    
+        [DataMember]
+        public Nullable<long> Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                if (_enabled != value)
+                {
+                    _enabled = value;
+                    OnPropertyChanged("Enabled");
+                }
+            }
+        }
+        private Nullable<long> _enabled;
+    
+        [DataMember]
+        public Nullable<long> Sort_Num
+        {
+            get { return _sort_Num; }
+            set
+            {
+                if (_sort_Num != value)
+                {
+                    _sort_Num = value;
+                    OnPropertyChanged("Sort_Num");
+                }
+            }
+        }
+        private Nullable<long> _sort_Num;
+    
+        [DataMember]
+        public string Create_User
+        {
+            get { return _create_User; }
+            set
+            {
+                if (_create_User != value)
+                {
+                    _create_User = value;
+                    OnPropertyChanged("Create_User");
+                }
+            }
+        }
+        private string _create_User;
+    
+        [DataMember]
+        public Nullable<System.DateTime> Create_Date
+        {
+            get { return _create_Date; }
+            set
+            {
+                if (_create_Date != value)
+                {
+                    _create_Date = value;
+                    OnPropertyChanged("Create_Date");
+                }
+            }
+        }
+        private Nullable<System.DateTime> _create_Date;
+    
+        [DataMember]
+        public string Modify_User
+        {
+            get { return _modify_User; }
+            set
+            {
+                if (_modify_User != value)
+                {
+                    _modify_User = value;
+                    OnPropertyChanged("Modify_User");
+                }
+            }
+        }
+        private string _modify_User;
+    
+        [DataMember]
+        public Nullable<System.DateTime> Modify_Date
+        {
+            get { return _modify_Date; }
+            set
+            {
+                if (_modify_Date != value)
+                {
+                    _modify_Date = value;
+                    OnPropertyChanged("Modify_Date");
+                }
+            }
+        }
+        private Nullable<System.DateTime> _modify_Date;
+    
+        [DataMember]
+        public Nullable<long> Title_ID
+        {
+            get { return _title_ID; }
+            set
+            {
+                if (_title_ID != value)
+                {
+                    _title_ID = value;
+                    OnPropertyChanged("Title_ID");
+                }
+            }
+        }
+        private Nullable<long> _title_ID;
 
         #endregion
         #region ChangeTracking

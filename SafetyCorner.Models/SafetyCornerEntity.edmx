@@ -6,12 +6,33 @@
     <edmx:StorageModels>
     <Schema Namespace="SafetyCornerModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="SafetyCornerModelStoreContainer">
+          <EntitySet Name="MenuList" EntityType="SafetyCornerModel.Store.MenuList" store:Type="Tables" />
           <EntitySet Name="Quicklink" EntityType="SafetyCornerModel.Store.Quicklink" store:Type="Tables" />
         </EntityContainer>
+        <EntityType Name="MenuList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Controller" Type="varchar" />
+          <Property Name="Action" Type="varchar" />
+          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="Title_ID" Type="integer" />
+          <Property Name="Text" Type="nvarchar" MaxLength="100" />
+          <Property Name="Target" Type="varchar" />
+          <Property Name="Href" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="Enabled" Type="integer" />
+          <Property Name="Sort_Num" Type="integer" />
+          <Property Name="Create_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Modify_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Modify_Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Quicklink">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
+          <Property Name="Sort_Num" Type="decimal" Precision="53" />
           <Property Name="Modify_Date" Type="datetime" />
           <Property Name="Modify_User" Type="nvarchar" MaxLength="100" />
           <Property Name="Create_Date" Type="datetime" />
@@ -28,22 +49,43 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SafetyCornerModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="SafetyCornerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MenuLists" EntityType="SafetyCornerModel.MenuList" />
           <EntitySet Name="Quicklinks" EntityType="SafetyCornerModel.Quicklink" />
         </EntityContainer>
+        <EntityType Name="MenuList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="Controller" MaxLength="2147483647" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Action" MaxLength="2147483647" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Text" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Href" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="Enabled" />
+          <Property Type="Int64" Name="Sort_Num" />
+          <Property Type="String" Name="Create_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Create_Date" />
+          <Property Type="String" Name="Modify_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Modify_Date" />
+          <Property Type="Int64" Name="Title_ID" />
+        </EntityType>
         <EntityType Name="Quicklink">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Title" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Href" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Text" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Sort_Num" Precision="53" Scale="0" />
           <Property Type="DateTime" Name="Modify_Date" />
           <Property Type="String" Name="Modify_User" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="Create_Date" />
           <Property Type="String" Name="Create_User" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="Enabled" />
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Href" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Text" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -51,19 +93,40 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SafetyCornerModelStoreContainer" CdmEntityContainer="SafetyCornerEntities">
+          <EntitySetMapping Name="MenuLists">
+            <EntityTypeMapping TypeName="SafetyCornerModel.MenuList">
+              <MappingFragment StoreEntitySet="MenuList">
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Create_User" ColumnName="Create_User" />
+                <ScalarProperty Name="Sort_Num" ColumnName="Sort_Num" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Href" ColumnName="Href" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Quicklinks">
             <EntityTypeMapping TypeName="SafetyCornerModel.Quicklink">
               <MappingFragment StoreEntitySet="Quicklink">
-                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-                <ScalarProperty Name="Create_User" ColumnName="Create_User" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
-                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="Target" ColumnName="Target" />
                 <ScalarProperty Name="Href" ColumnName="Href" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Create_User" ColumnName="Create_User" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Sort_Num" ColumnName="Sort_Num" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -89,7 +152,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="SafetyCornerEntity">
-        <EntityTypeShape EntityType="SafetyCornerModel.Quicklink" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333326" />
+        <EntityTypeShape EntityType="SafetyCornerModel.MenuList" Width="1.5" PointX="3.375" PointY="0.75" Height="3.5186979166666656" />
+        <EntityTypeShape EntityType="SafetyCornerModel.Quicklink" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -1,9 +1,28 @@
-﻿<div class="site-title">
+﻿@model IEnumerable<SafetyCorner.Models.MenuList>
+<div class="site-title">
     <img width="569" height="127" src="content/img/ISSite.gif" alt="文字方塊: 中壢廠環安資訊網站"></div>
 <div class="menu-bg">
 </div>
 <div class="menu">
-    <!-- 工安衛組織 選單 -->
+    @foreach (var item in Model)
+    {
+        if (item.Title_ID == 0)
+        { 
+        <!-- @(item.Text) 選單 -->
+        <div id="menu@(item.ID)" class="menu-title">
+            @item.Text</div>
+        <div for="menu@(item.ID)" class="sub-menu">
+            <ul class="menu-list">
+                @foreach (var subItem in Model.Where(m => m.Title_ID.Value.Equals(item.ID)))
+                {
+                    <li><a href="@subItem.Href" >@subItem.Text </a></li>
+                }
+            </ul>
+        </div>
+        <!-- end @(item.Text) 選單 -->
+        }
+    }
+    @*    <!-- 工安衛組織 選單 -->
     <div id="menu1" class="menu-title">
         工安衛組織</div>
     <div for="menu1" class="sub-menu">
@@ -61,4 +80,5 @@
         </ul>
     </div>
     <!-- 工安小幫手 選單 -->
+*@
 </div>

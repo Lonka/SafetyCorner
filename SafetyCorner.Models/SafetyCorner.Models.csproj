@@ -61,12 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="MenuList.cs">
+      <DependentUpon>SafetyCorner.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quicklink.cs">
       <DependentUpon>SafetyCorner.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\DataAccess.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\MenuListRepository.cs" />
     <Compile Include="Repository\PersonRepository.cs" />
     <Compile Include="Repository\QuickLinkRepository.cs" />
     <Compile Include="SafetyCorner.Context.cs">

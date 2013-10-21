@@ -13,8 +13,10 @@
     @{Html.RenderAction("QuickLink", "Home");}
     <!-- end 左方快速連結 -->
     <div class="main">
-    @{Html.RenderAction("Menu", "Home");}
-        @RenderBody()
+        @{Html.RenderAction("Menu", "Home");}
+        <div class="content">
+            @RenderBody()
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/main.js")

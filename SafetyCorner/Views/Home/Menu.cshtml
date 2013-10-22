@@ -15,7 +15,16 @@
             <ul class="menu-list">
                 @foreach (var subItem in Model.Where(m => m.Title_ID.Value.Equals(item.ID)))
                 {
-                    <li><a href="@subItem.Href" >@subItem.Text </a></li>
+                    <li>
+                        @if (!string.IsNullOrEmpty(subItem.Href))
+                        { 
+                            <a href="@subItem.Href" >@subItem.Text </a>
+                        }
+                        else
+                        {
+                            @Html.ActionLink(subItem.Text, subItem.Action, subItem.Controller)
+                        }
+                    </li>
                 }
             </ul>
         </div>

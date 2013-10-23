@@ -82,6 +82,7 @@ body
     top: 0;
     height: 70px;
     display: none;
+    z-index: 9999;
 }
 
 .menu-fixed
@@ -161,6 +162,10 @@ body
     text-align: left;
     padding: 10px;
     margin-left: 3.5%;
+}
+
+.content input{
+    color:#000000 !important;
 }
 
 .content-fixed

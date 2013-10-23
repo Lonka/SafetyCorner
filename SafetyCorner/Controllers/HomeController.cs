@@ -35,5 +35,34 @@ namespace SafetyCorner.Controllers
             return PartialView(menuItems);
         }
 
+        [HttpPost]
+        public JsonResult Query(string name,string age)
+        {
+            List<GridRowData> data = new List<GridRowData>();
+            data.Add(new GridRowData() { name = "Lonka", age = "28", href = "/ConferenceRecond", hrefText = "GoL" });
+            data.Add(new GridRowData() { name = "Sharon", age = "38", href = "#", hrefText = "GoS" });
+            data.Add(new GridRowData() { name = "Donna", age = "48", href = "#", hrefText = "GoD" });
+            data.Add(new GridRowData() { name = "Jelly", age = "58", href = "#", hrefText = "GoJ" });
+            data.Add(new GridRowData() { name = "James", age = "68", href = "#", hrefText = "GoJ" });
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                data = data.Where(item => item.name.IndexOf(name) > -1).ToList();
+            }
+            if (!string.IsNullOrEmpty(age))
+            {
+                data = data.Where(item => int.Parse(item.age) > int.Parse(age)).ToList();
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+    }
+
+    public class GridRowData
+    {
+        public string name { get; set; }
+        public string age { get; set; }
+        public string href { get; set; }
+        public string hrefText { get; set; }
     }
 }

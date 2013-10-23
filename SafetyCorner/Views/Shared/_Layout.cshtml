@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html >
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -7,6 +7,13 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/reset.css")
     @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/ng-grid.min.css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/main.js")
+    @Scripts.Render("~/Scripts/angular.min.js")
+    @Scripts.Render("~/Scripts/ng-grid-2.0.7.min.js")
+    @RenderSection("scripts", required: false)
 </head>
 <body>
     <!-- 左方快速連結 -->
@@ -18,8 +25,6 @@
             @RenderBody()
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/Scripts/main.js")
-    @RenderSection("scripts", required: false)
+
 </body>
 </html>

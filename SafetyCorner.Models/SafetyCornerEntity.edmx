@@ -6,16 +6,31 @@
     <edmx:StorageModels>
     <Schema Namespace="SafetyCornerModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="SafetyCornerModelStoreContainer">
+          <EntitySet Name="FileList" EntityType="SafetyCornerModel.Store.FileList" store:Type="Tables" />
           <EntitySet Name="MenuList" EntityType="SafetyCornerModel.Store.MenuList" store:Type="Tables" />
           <EntitySet Name="Quicklink" EntityType="SafetyCornerModel.Store.Quicklink" store:Type="Tables" />
         </EntityContainer>
+        <EntityType Name="FileList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="File_Root" Type="nvarchar" MaxLength="200" />
+          <Property Name="Modify_Date" Type="datetime" />
+          <Property Name="Modify_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Create_User" Type="nvarchar" MaxLength="100" />
+          <Property Name="Enabled" Type="integer" />
+          <Property Name="File_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="File_Size" Type="integer" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="MenuList">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="Controller" Type="varchar" />
           <Property Name="Action" Type="varchar" />
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Title_ID" Type="integer" />
           <Property Name="Text" Type="nvarchar" MaxLength="100" />
           <Property Name="Target" Type="varchar" />
@@ -38,7 +53,7 @@
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Create_User" Type="nvarchar" MaxLength="100" />
           <Property Name="Enabled" Type="integer" />
-          <Property Name="ID" Type="integer" Nullable="false" />
+          <Property Name="ID" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
           <Property Name="Href" Type="nvarchar" MaxLength="100" />
           <Property Name="Target" Type="varchar" />
@@ -49,16 +64,32 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SafetyCornerModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="SafetyCornerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FileLists" EntityType="SafetyCornerModel.FileList" />
           <EntitySet Name="MenuLists" EntityType="SafetyCornerModel.MenuList" />
           <EntitySet Name="Quicklinks" EntityType="SafetyCornerModel.Quicklink" />
         </EntityContainer>
+        <EntityType Name="FileList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="String" Name="File_Root" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Modify_Date" />
+          <Property Type="String" Name="Modify_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="Create_Date" />
+          <Property Type="String" Name="Create_User" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="Enabled" />
+          <Property Type="String" Name="File_Name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="File_Size" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityType Name="MenuList">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="String" Name="Controller" MaxLength="2147483647" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Action" MaxLength="2147483647" FixedLength="false" Unicode="false" />
-          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="Title_ID" />
           <Property Type="String" Name="Text" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Href" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -69,7 +100,6 @@
           <Property Type="DateTime" Name="Create_Date" />
           <Property Type="String" Name="Modify_User" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="Modify_Date" />
-          <Property Type="Int64" Name="Title_ID" />
         </EntityType>
         <EntityType Name="Quicklink">
           <Key>
@@ -81,22 +111,36 @@
           <Property Type="DateTime" Name="Create_Date" />
           <Property Type="String" Name="Create_User" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int64" Name="Enabled" />
-          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Href" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Target" MaxLength="2147483647" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Text" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SafetyCornerModelStoreContainer" CdmEntityContainer="SafetyCornerEntities">
+          <EntitySetMapping Name="FileLists">
+            <EntityTypeMapping TypeName="SafetyCornerModel.FileList">
+              <MappingFragment StoreEntitySet="FileList">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="File_Size" ColumnName="File_Size" />
+                <ScalarProperty Name="File_Name" ColumnName="File_Name" />
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="Create_User" ColumnName="Create_User" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="File_Root" ColumnName="File_Root" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MenuLists">
             <EntityTypeMapping TypeName="SafetyCornerModel.MenuList">
               <MappingFragment StoreEntitySet="MenuList">
-                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
                 <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
                 <ScalarProperty Name="Modify_User" ColumnName="Modify_User" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
@@ -107,6 +151,7 @@
                 <ScalarProperty Name="Href" ColumnName="Href" />
                 <ScalarProperty Name="Target" ColumnName="Target" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Title_ID" ColumnName="Title_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
@@ -152,8 +197,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="SafetyCornerEntity">
-        <EntityTypeShape EntityType="SafetyCornerModel.MenuList" Width="1.5" PointX="3.375" PointY="0.75" Height="3.5186979166666656" />
-        <EntityTypeShape EntityType="SafetyCornerModel.Quicklink" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" />
+        <EntityTypeShape EntityType="SafetyCornerModel.FileList" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="SafetyCornerModel.MenuList" Width="1.5" PointX="2.75" PointY="0.75" Height="3.7109993489583317" />
+        <EntityTypeShape EntityType="SafetyCornerModel.Quicklink" Width="1.5" PointX="4.75" PointY="0.75" Height="3.1340950520833317" />
       </Diagram>
     </Diagrams>
   </Designer>

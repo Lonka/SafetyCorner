@@ -1,7 +1,101 @@
-﻿<h2>會議記錄</h2>
+﻿<script type="text/javascript">
+    var app = angular.module('GridApp', ['ngGrid']);
+    app.filter('bytes', function () {
+        return function (bytes, precision) {
+            if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+            if (typeof precision === 'undefined') precision = 1;
+            var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+			number = Math.floor(Math.log(bytes) / Math.log(1024));
+            return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+        }
+    });
+    app.controller('GridCtrl', function ($scope, $http) {
+        //分頁
+        $scope.pagingOptions = {
+            pageSizes: [10, 25, 50],
+            pageSize: 10,
+            currentPage: 1
+        }
+
+        //監視分頁動作
+        $scope.$watch('pagingOptions', function (newVal, oldVal) {
+            //必需要換到不同頁
+            if (newVal !== oldVal || newVal.currentPage !== oldVal.currentPage) {
+                $scope.getPagedDataAsync(newVal.pageSize, newVal.currentPage)
+            }
+        }, true);
+
+        //動態取資料
+        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
+            setTimeout(function () {
+                var queryData;
+                queryData = { "fileDate": $scope.fileDate, "fileName": $scope.fileName };
+                //TODO set query data
+                $http.post('/ConferenceRecond/Query', queryData).success(function (largeLoad) {
+                    $scope.setPagingData(largeLoad, page, pageSize);
+                });
+            }, 100);
+        }
+
+        //第一次取資料
+        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+
+        //設定資料
+        $scope.setPagingData = function (data, page, pageSize) {
+            var pageData = data.slice((page - 1) * pageSize, page * pageSize);
+            $scope.myData = pageData;
+            $scope.totalServerItems = data.length;
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+        }
+
+        $scope.search = function () {
+            $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+        }
+
+        $scope.gridOptions = { data: 'myData',
+            columnDefs: [{ field: 'Create_Date', width: '140px', displayName: '日期', cellTemplate: '<div class="ngCellText">{{row.getProperty(col.field)|date:\'yyyy-MM-dd\'}}</div>' }
+			, { field: 'File_Size', width: '120px', displayName: '檔案大小', cellTemplate: '<div class="ngCellText">{{row.getProperty(col.field)|bytes}}</div>' }
+			, { field: 'File_Name', displayName: '內容', cellTemplate: '<div class="ngCellText"><a href="{{row.getProperty(\'File_Root\')}}">{{row.getProperty(col.field)}}</a></div>'}],
+            multiSelect: false,
+            enablePaging: true,
+            showFooter: true,
+            enableRowSelection:false,
+            i18n: "zh-tw",
+            totalServerItems: 'totalServerItems',
+            footerRowHeight: 50,
+            pagingOptions: $scope.pagingOptions,
+            afterSelectionChange: function (data) {
+                if (typeof $scope.mySelections[0] !== "undefined") {
+                    console.log("rowIndex", data.rowIndex);
+                    console.log("selectName", $scope.mySelections[0].name)
+                }
+            }
+        };
+
+    })
+</script>
+<h2>
+    會議記錄</h2>
 <hr />
 <form action="@Url.Action("Upload")" method="post" enctype="multipart/form-data">
-<label for="file">檔案名稱</label>
+<label for="file">
+    檔案名稱</label>
 <input type="file" name="file" id="file" />
-<input type="submit" value="上傳"/>
+<input type="submit" value="上傳" />
 </form>
+<div ng-app="GridApp">
+    <div ng-controller="GridCtrl">
+        <label>
+            日期:</label>
+        <input type="text" ng-model="fileDate" />
+        <label>
+            內容:</label>
+        <input type="text" ng-model="fileName" />
+        <button type="submit" ng-click="search()">
+            查詢</button>
+        <div class="gridStyle" ng-grid="gridOptions">
+        </div>
+    </div>
+</div>

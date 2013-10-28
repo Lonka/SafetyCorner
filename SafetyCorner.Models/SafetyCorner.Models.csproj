@@ -34,6 +34,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite.Designer">
       <HintPath>..\..\..\..\Program Files\System.Data.SQLite\2010\bin\SQLite.Designer.dll</HintPath>
     </Reference>
@@ -60,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileList.cs">
+      <DependentUpon>SafetyCorner.tt</DependentUpon>
+    </Compile>
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="MenuList.cs">
       <DependentUpon>SafetyCorner.tt</DependentUpon>
@@ -69,6 +75,7 @@
       <DependentUpon>SafetyCorner.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\DataAccess.cs" />
+    <Compile Include="Repository\FileListRepository.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\MenuListRepository.cs" />
     <Compile Include="Repository\PersonRepository.cs" />

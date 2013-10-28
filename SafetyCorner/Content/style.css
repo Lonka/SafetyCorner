@@ -2,7 +2,7 @@
 body, table, p, div, span, form, input, textarea, select, pre, button, a
 {
     font-family: "微軟正黑體" , "Microsoft JhengHei" , "新細明體" , "PMingLiU" , AppleGothic, Dotum, Lucida Grande, Verdana Sans-serif;
-    color: #fff;
+    /*color: #fff;*/
     font-size: 14pt;
     line-height: 22pt;
 }
@@ -39,6 +39,7 @@ body
 {
     display: block;
     text-decoration: none;
+    color:#fff;
 }
 .navigation-link li a:hover
 {
@@ -62,6 +63,7 @@ body
     _text-align: center;
     text-align: center;
     margin-left: 160px;
+    min-width: 805px;
 }
 .site-title
 {
@@ -74,6 +76,7 @@ body
     text-align: center;
     _text-align: center;
     margin: 0px auto;
+    min-width: 805px;
 }
 .menu-bg
 {
@@ -83,6 +86,7 @@ body
     height: 70px;
     display: none;
     z-index: 9999;
+    width: 100% !important;
 }
 
 .menu-fixed
@@ -106,6 +110,7 @@ body
     -webkit-box-shadow: 0px 2px 3px rgba(128,128,128,0.5);
     -moz-box-shadow: 0px 2px 3px rgba(128,128,128,0.5);
     box-shadow: 0px 2px 3px rgba(128,128,128,0.5);
+    z-index: 10;
 }
 
 .menu-list
@@ -143,6 +148,7 @@ body
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+    color:#fff;
 }
 .menu-title:hover
 {
@@ -156,16 +162,25 @@ body
 .content
 {
     margin-top: 40px;
-    background: #0B1A2D;
+    background: #2D84AE;
     border: 2px solid #387CCF;
     width: 90%;
     text-align: left;
     padding: 10px;
     margin-left: 3.5%;
+    min-width: 805px;
+}
+
+.content label{
+    color:#fff;
+}
+
+.content h2{
+    color:#fff;
 }
 
 .content input{
-    color:#000000 !important;
+    /*color:#000000 !important;*/
 }
 
 .content-fixed
@@ -182,4 +197,13 @@ body
 {
     float: right;
 }
+
+
+.gridStyle
+    {
+        border: 1px solid rgb(212,212,212);
+        width: 800px;
+        height: 383px;
+    }
+
 

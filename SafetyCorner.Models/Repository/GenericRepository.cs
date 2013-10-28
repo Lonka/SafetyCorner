@@ -148,6 +148,11 @@ namespace SafetyCorner.Models.Repository
             return (IQueryable<TEntity>)this._context.Set<TEntity>().Where(predicate);
         }
 
+        public IQueryable<TEntity> GetSome(IQueryable<TEntity> source,Expression<Func<TEntity,bool>> predicate )
+        {
+            return (IQueryable<TEntity>)source.Where(predicate);
+        }
+
         public TEntity Find(int idx)
         {
             return this._context.Set<TEntity>().Find(idx);

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -8,7 +8,6 @@
     @Styles.Render("~/Content/reset.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/ng-grid.min.css")
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/main.js")
     @Scripts.Render("~/Scripts/angular.min.js")
@@ -16,6 +15,8 @@
     @RenderSection("scripts", required: false)
 </head>
 <body>
+    <div class="menu-bg">
+    </div>
     <!-- 左方快速連結 -->
     @{Html.RenderAction("QuickLink", "Home");}
     <!-- end 左方快速連結 -->
@@ -25,6 +26,5 @@
             @RenderBody()
         </div>
     </div>
-
 </body>
 </html>

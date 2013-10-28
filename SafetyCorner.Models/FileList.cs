@@ -18,39 +18,129 @@ using System.Runtime.Serialization;
 namespace SafetyCorner.Models
 {
     [DataContract(IsReference = true)]
-    public partial class MenuList: IObjectWithChangeTracker, INotifyPropertyChanged
+    public partial class FileList: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region 基本屬性
     
         [DataMember]
-        public string Controller
+        public string File_Root
         {
-            get { return _controller; }
+            get { return _file_Root; }
             set
             {
-                if (_controller != value)
+                if (_file_Root != value)
                 {
-                    _controller = value;
-                    OnPropertyChanged("Controller");
+                    _file_Root = value;
+                    OnPropertyChanged("File_Root");
                 }
             }
         }
-        private string _controller;
+        private string _file_Root;
     
         [DataMember]
-        public string Action
+        public Nullable<System.DateTime> Modify_Date
         {
-            get { return _action; }
+            get { return _modify_Date; }
             set
             {
-                if (_action != value)
+                if (_modify_Date != value)
                 {
-                    _action = value;
-                    OnPropertyChanged("Action");
+                    _modify_Date = value;
+                    OnPropertyChanged("Modify_Date");
                 }
             }
         }
-        private string _action;
+        private Nullable<System.DateTime> _modify_Date;
+    
+        [DataMember]
+        public string Modify_User
+        {
+            get { return _modify_User; }
+            set
+            {
+                if (_modify_User != value)
+                {
+                    _modify_User = value;
+                    OnPropertyChanged("Modify_User");
+                }
+            }
+        }
+        private string _modify_User;
+    
+        [DataMember]
+        public Nullable<System.DateTime> Create_Date
+        {
+            get { return _create_Date; }
+            set
+            {
+                if (_create_Date != value)
+                {
+                    _create_Date = value;
+                    OnPropertyChanged("Create_Date");
+                }
+            }
+        }
+        private Nullable<System.DateTime> _create_Date;
+    
+        [DataMember]
+        public string Create_User
+        {
+            get { return _create_User; }
+            set
+            {
+                if (_create_User != value)
+                {
+                    _create_User = value;
+                    OnPropertyChanged("Create_User");
+                }
+            }
+        }
+        private string _create_User;
+    
+        [DataMember]
+        public Nullable<long> Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                if (_enabled != value)
+                {
+                    _enabled = value;
+                    OnPropertyChanged("Enabled");
+                }
+            }
+        }
+        private Nullable<long> _enabled;
+    
+        [DataMember]
+        public string File_Name
+        {
+            get { return _file_Name; }
+            set
+            {
+                if (_file_Name != value)
+                {
+                    _file_Name = value;
+                    OnPropertyChanged("File_Name");
+                }
+            }
+        }
+        private string _file_Name;
+    
+        [DataMember]
+        public Nullable<long> File_Size
+        {
+            get { return _file_Size; }
+            set
+            {
+                if (_file_Size != value)
+                {
+                    _file_Size = value;
+                    OnPropertyChanged("File_Size");
+                }
+            }
+        }
+        private Nullable<long> _file_Size;
     
         [DataMember]
         public long ID
@@ -70,171 +160,6 @@ namespace SafetyCorner.Models
             }
         }
         private long _iD;
-    
-        [DataMember]
-        public Nullable<long> Title_ID
-        {
-            get { return _title_ID; }
-            set
-            {
-                if (_title_ID != value)
-                {
-                    _title_ID = value;
-                    OnPropertyChanged("Title_ID");
-                }
-            }
-        }
-        private Nullable<long> _title_ID;
-    
-        [DataMember]
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                if (_text != value)
-                {
-                    _text = value;
-                    OnPropertyChanged("Text");
-                }
-            }
-        }
-        private string _text;
-    
-        [DataMember]
-        public string Target
-        {
-            get { return _target; }
-            set
-            {
-                if (_target != value)
-                {
-                    _target = value;
-                    OnPropertyChanged("Target");
-                }
-            }
-        }
-        private string _target;
-    
-        [DataMember]
-        public string Href
-        {
-            get { return _href; }
-            set
-            {
-                if (_href != value)
-                {
-                    _href = value;
-                    OnPropertyChanged("Href");
-                }
-            }
-        }
-        private string _href;
-    
-        [DataMember]
-        public string Title
-        {
-            get { return _title; }
-            set
-            {
-                if (_title != value)
-                {
-                    _title = value;
-                    OnPropertyChanged("Title");
-                }
-            }
-        }
-        private string _title;
-    
-        [DataMember]
-        public Nullable<long> Enabled
-        {
-            get { return _enabled; }
-            set
-            {
-                if (_enabled != value)
-                {
-                    _enabled = value;
-                    OnPropertyChanged("Enabled");
-                }
-            }
-        }
-        private Nullable<long> _enabled;
-    
-        [DataMember]
-        public Nullable<long> Sort_Num
-        {
-            get { return _sort_Num; }
-            set
-            {
-                if (_sort_Num != value)
-                {
-                    _sort_Num = value;
-                    OnPropertyChanged("Sort_Num");
-                }
-            }
-        }
-        private Nullable<long> _sort_Num;
-    
-        [DataMember]
-        public string Create_User
-        {
-            get { return _create_User; }
-            set
-            {
-                if (_create_User != value)
-                {
-                    _create_User = value;
-                    OnPropertyChanged("Create_User");
-                }
-            }
-        }
-        private string _create_User;
-    
-        [DataMember]
-        public Nullable<System.DateTime> Create_Date
-        {
-            get { return _create_Date; }
-            set
-            {
-                if (_create_Date != value)
-                {
-                    _create_Date = value;
-                    OnPropertyChanged("Create_Date");
-                }
-            }
-        }
-        private Nullable<System.DateTime> _create_Date;
-    
-        [DataMember]
-        public string Modify_User
-        {
-            get { return _modify_User; }
-            set
-            {
-                if (_modify_User != value)
-                {
-                    _modify_User = value;
-                    OnPropertyChanged("Modify_User");
-                }
-            }
-        }
-        private string _modify_User;
-    
-        [DataMember]
-        public Nullable<System.DateTime> Modify_Date
-        {
-            get { return _modify_Date; }
-            set
-            {
-                if (_modify_Date != value)
-                {
-                    _modify_Date = value;
-                    OnPropertyChanged("Modify_Date");
-                }
-            }
-        }
-        private Nullable<System.DateTime> _modify_Date;
 
         #endregion
         #region ChangeTracking

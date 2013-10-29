@@ -61,7 +61,7 @@
             multiSelect: false,
             enablePaging: true,
             showFooter: true,
-            enableRowSelection:false,
+            enableRowSelection: false,
             i18n: "zh-tw",
             totalServerItems: 'totalServerItems',
             footerRowHeight: 50,
@@ -75,14 +75,31 @@
         };
 
     })
+
+
+
+
+
+   
 </script>
+<style type="text/css">
+    
+</style>
 <h2>
     會議記錄</h2>
 <hr />
 <form action="@Url.Action("Upload")" method="post" enctype="multipart/form-data">
 <label for="file">
     檔案名稱</label>
-<input type="file" name="file" id="file" />
+@*<input type="file" name="file" id="file" />*@ 
+@* 上傳 *@
+<div style="display: inline;">
+    <input type="file" id="file" name="file" />
+    <input id="file_name" type="text">
+    <a id="file_img">
+        <img src="../../Content/img/li_icon.png" /></a>
+</div>
+@* #上傳 *@
 <input type="submit" value="上傳" />
 </form>
 <div ng-app="GridApp">
@@ -99,3 +116,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var wrapper = $('<div/>').css({ height: 0, width: 0, 'overflow': 'hidden', 'display': 'none' });
+    var fileInput = $('#file').wrap(wrapper);
+    $('#file_img').click(function () {
+        fileInput.click();
+    }).show();
+    fileInput.change(function () {
+        if ($(this).val() != "") {
+            $this = $(this).val().replace(/C:\\fakepath\\/i, '');
+            $('#file_name').val($this);
+        }
+    });
+</script>

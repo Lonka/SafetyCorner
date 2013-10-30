@@ -69,5 +69,14 @@ namespace SafetyCorner.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(data);
         }
 
+        [HttpPost]
+        public ActionResult AsyncFileUpload(HttpPostedFileBase file,string fileId)
+        {
+            //var fileName = Path.GetFileName(file.FileName);
+            //var path = Path.Combine(Server.MapPath("~/Files/ConferenceReconds"), fileName);
+            //file.SaveAs(path);
+            return Content(file.FileName + " " + file.ContentLength);
+        }
+
     }
 }

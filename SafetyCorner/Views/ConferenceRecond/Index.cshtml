@@ -1,5 +1,4 @@
 ﻿@using SafetyCorner.Common
-
 <script type="text/javascript">
     var app = angular.module('GridApp', ['ngGrid']);
     app.filter('bytes', function () {
@@ -11,7 +10,7 @@
             return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
         }
     });
-    app.controller('GridCtrl', function ($scope, $http) {
+    app.controller('FormCtrl', function ($scope, $http, $timeout) {
         //分頁
         $scope.pagingOptions = {
             pageSizes: [10, 25, 50],
@@ -75,13 +74,48 @@
                 }
             }
         };
-
     })
 
 
+ /*   angular.module('Calendar', ['ui.bootstrap']);
+    var DatepickerDemoCtrl = function ($scope, $timeout) {
+        $scope.today = function () {
+            $scope.dt = new Date();
+        };
+        $scope.today();
 
+        $scope.showWeeks = true;
+        $scope.toggleWeeks = function () {
+            $scope.showWeeks = !$scope.showWeeks;
+        };
 
+        $scope.clear = function () {
+            $scope.dt = null;
+        };
 
+        // Disable weekend selection
+        $scope.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+        };
+
+        $scope.toggleMin = function () {
+            $scope.minDate = ($scope.minDate) ? null : new Date();
+        };
+        $scope.toggleMin();
+
+        $scope.open = function () {
+            $timeout(function () {
+                $scope.opened = true;
+            });
+        };
+
+        $scope.dateOptions = {
+            'year-format': "'yy'",
+            'starting-day': 1
+        };
+    };
+
+    */
    
 </script>
 <style type="text/css">
@@ -99,21 +133,21 @@
 { 
     <label for="file">
         檔案名稱</label>
-@*<input type="file" name="file" id="file" />*@ 
-@* 上傳 
-    <div style="display: inline;">
-        <input type="file" id="file" name="file" />
-        <input id="file_text" type="text" disabled="disabled">
-        <a id="file_img" class="btnFolder"></a>
-    </div>
-    <div id="file_callback" style="display: inline;">
-    </div>
- #上傳 *@
-    @Html.FileUpload("file", null, "AsyncFileUpload", "ConferenceRecond")
+    @Html.FileUpload("file", null)
     <input type="submit" value="上傳" />
 }
+@*<div ng-app="Calendar">
+    <div ng-controller="DatepickerDemoCtrl">
+        <input type="text" ng-model="dt" datepicker-popup="dd-MMMM-yyyy" is-open="opened"
+            min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+            ng-required="true" />
+        <button class="btn" ng-click="open()">
+            <i class="icon-calendar"></i>
+        </button>
+    </div>
+</div>*@
 <div ng-app="GridApp">
-    <div ng-controller="GridCtrl">
+    <div ng-controller="FormCtrl">
         <label>
             日期:</label>
         <input type="text" ng-model="fileDate" />
@@ -127,32 +161,32 @@
     </div>
 </div>
 <script type="text/javascript">
-//    var wrapper = $('<div/>').css({ height: 0, width: 0, 'overflow': 'hidden', 'display': 'none' });
-//    var fileInput = $('#file').wrap(wrapper);
-//    $('#file_img').click(function () {
-//        fileInput.click();
-//    }).show();
-//    fileInput.change(function () {
-//        if ($(this).val() != "") {
-//            $this = $(this).val().replace(/C:\\fakepath\\/i, '');
-//            $('#file_text').val($this);
+    //    var wrapper = $('<div/>').css({ height: 0, width: 0, 'overflow': 'hidden', 'display': 'none' });
+    //    var fileInput = $('#file').wrap(wrapper);
+    //    $('#file_img').click(function () {
+    //        fileInput.click();
+    //    }).show();
+    //    fileInput.change(function () {
+    //        if ($(this).val() != "") {
+    //            $this = $(this).val().replace(/C:\\fakepath\\/i, '');
+    //            $('#file_text').val($this);
 
-//            var files = $("#file").get(0).files;
-//            if (files.length > 0) {
-//                var data = new FormData();
-//                data.append("file", files[0]);
-//                data.append("fileId", "file")
-//                $.ajax({
-//                    type: "POST",
-//                    url: "/ConferenceRecond/AsyncFileUpload",
-//                    contentType: false,
-//                    processData: false,
-//                    data: data
-//                }).done(function (data) {
-//                    $('#file_callback').text(data);
-//                });
-//            }
-//        }
+    //            var files = $("#file").get(0).files;
+    //            if (files.length > 0) {
+    //                var data = new FormData();
+    //                data.append("file", files[0]);
+    //                data.append("fileId", "file")
+    //                $.ajax({
+    //                    type: "POST",
+    //                    url: "/ConferenceRecond/AsyncFileUpload",
+    //                    contentType: false,
+    //                    processData: false,
+    //                    data: data
+    //                }).done(function (data) {
+    //                    $('#file_callback').text(data);
+    //                });
+    //            }
+    //        }
 
-//    });
+    //    });
 </script>

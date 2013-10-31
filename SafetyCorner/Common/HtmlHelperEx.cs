@@ -103,7 +103,7 @@ namespace SafetyCorner.Common
             {
                 inputTag.MergeAttributes(htmlAttributes);
             }
-            inputTag.MergeAttribute("disabled", "disabled");
+            inputTag.MergeAttribute("readonly", "");
             inputTag.MergeAttribute("style", "margin-right:5px");
             TagBuilder aTag = new TagBuilder("a");
             aTag.AddCssClass("btnFolder");

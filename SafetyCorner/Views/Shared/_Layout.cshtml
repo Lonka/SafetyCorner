@@ -4,20 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @*<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">  *@
+    @*http://kkbruce.tw/*@
+@*    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">  *@
+@*    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">*@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/reset.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/ng-grid.min.css")
-    @*@Styles.Render("~/Content/bootstrap.min.css")*@
+    @Styles.Render("~/Content/bootstrap.min.css")    
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/main.js")
     @Scripts.Render("~/Scripts/angular.min.js")
     @Scripts.Render("~/Scripts/ng-grid-2.0.7.min.js")
-    @*@Scripts.Render("~/Scripts/ui-bootstrap-tpls-0.6.0.min.js")*@
+@*    @Scripts.Render("~/Scripts/ui-bootstrap-tpls-0.6.0.min.js")*@
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
     @RenderSection("scripts", required: false)
 </head>
-<body>
+<body class="body-color">
     <div class="menu-bg">
     </div>
     <!-- 左方快速連結 -->
@@ -25,7 +29,7 @@
     <!-- end 左方快速連結 -->
     <div class="main">
         @{Html.RenderAction("Menu", "Home");}
-        <div class="content">
+        <div class="content content-color">
             @RenderBody()
         </div>
     </div>

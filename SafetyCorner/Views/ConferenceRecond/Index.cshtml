@@ -1,4 +1,9 @@
 ﻿@using SafetyCorner.Common
+<!-- TODO Bookstarp form-inline style 
+http://getbootstrap.com/
+calender
+form style
+-->
 <script type="text/javascript">
     var app = angular.module('GridApp', ['ngGrid']);
     app.filter('bytes', function () {
@@ -77,42 +82,42 @@
     })
 
 
- /*   angular.module('Calendar', ['ui.bootstrap']);
+    /*   angular.module('Calendar', ['ui.bootstrap']);
     var DatepickerDemoCtrl = function ($scope, $timeout) {
-        $scope.today = function () {
-            $scope.dt = new Date();
-        };
-        $scope.today();
+    $scope.today = function () {
+    $scope.dt = new Date();
+    };
+    $scope.today();
 
-        $scope.showWeeks = true;
-        $scope.toggleWeeks = function () {
-            $scope.showWeeks = !$scope.showWeeks;
-        };
+    $scope.showWeeks = true;
+    $scope.toggleWeeks = function () {
+    $scope.showWeeks = !$scope.showWeeks;
+    };
 
-        $scope.clear = function () {
-            $scope.dt = null;
-        };
+    $scope.clear = function () {
+    $scope.dt = null;
+    };
 
-        // Disable weekend selection
-        $scope.disabled = function (date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };
+    // Disable weekend selection
+    $scope.disabled = function (date, mode) {
+    return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+    };
 
-        $scope.toggleMin = function () {
-            $scope.minDate = ($scope.minDate) ? null : new Date();
-        };
-        $scope.toggleMin();
+    $scope.toggleMin = function () {
+    $scope.minDate = ($scope.minDate) ? null : new Date();
+    };
+    $scope.toggleMin();
 
-        $scope.open = function () {
-            $timeout(function () {
-                $scope.opened = true;
-            });
-        };
+    $scope.open = function () {
+    $timeout(function () {
+    $scope.opened = true;
+    });
+    };
 
-        $scope.dateOptions = {
-            'year-format': "'yy'",
-            'starting-day': 1
-        };
+    $scope.dateOptions = {
+    'year-format': "'yy'",
+    'starting-day': 1
+    };
     };
 
     */
@@ -125,17 +130,76 @@
         padding-left: 20px;
         height: 25px;
     }
+    
+    .btn-file
+    {
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-file input[type=file]
+    {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 999px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        background: red;
+        cursor: inherit;
+        display: block;
+    }
+    
+    input[readonly]
+    {
+        background-color: white !important;
+        cursor: text !important;
+    }
+    .modal label
+    {
+        color: Black;
+        font-weight: 300;
+    }
 </style>
 <h2>
     會議記錄</h2>
 <hr />
-@using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{ 
-    <label for="file">
-        檔案名稱</label>
-    @Html.FileUpload("file", null)
-    <input type="submit" value="上傳" />
-}
+<div id="FileUpload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                上傳檔案
+            </div>
+            @using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            { 
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3">
+                            檔案名稱：</label>
+                        <div class="col-sm-7 file-control">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm" readonly="">
+                                <span class="input-group-btn"><span class="btn-primary btn-file btn btn-sm">請選擇
+                                    <input name="file" id="file" type="file" multiple="">
+                                </span></span>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        關閉</button>
+                    <button type="submit" class="btn btn-primary">
+                        上傳</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
 @*<div ng-app="Calendar">
     <div ng-controller="DatepickerDemoCtrl">
         <input type="text" ng-model="dt" datepicker-popup="dd-MMMM-yyyy" is-open="opened"
@@ -146,47 +210,42 @@
         </button>
     </div>
 </div>*@
-<div ng-app="GridApp">
+<div ng-app="GridApp" class="form-inline">
     <div ng-controller="FormCtrl">
         <label>
-            日期:</label>
+            日期：</label>
         <input type="text" ng-model="fileDate" />
         <label>
-            內容:</label>
+            內容：</label>
         <input type="text" ng-model="fileName" />
         <button type="submit" ng-click="search()">
             查詢</button>
+        <button type="button" data-toggle="modal" data-target="#FileUpload">
+            上傳檔案</button>
         <div class="gridStyle" ng-grid="gridOptions">
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    //    var wrapper = $('<div/>').css({ height: 0, width: 0, 'overflow': 'hidden', 'display': 'none' });
-    //    var fileInput = $('#file').wrap(wrapper);
-    //    $('#file_img').click(function () {
-    //        fileInput.click();
-    //    }).show();
-    //    fileInput.change(function () {
-    //        if ($(this).val() != "") {
-    //            $this = $(this).val().replace(/C:\\fakepath\\/i, '');
-    //            $('#file_text').val($this);
+    $(document).on('change', '.btn-file :file', function () {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+    });
+    $(document).ready(function () {
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
-    //            var files = $("#file").get(0).files;
-    //            if (files.length > 0) {
-    //                var data = new FormData();
-    //                data.append("file", files[0]);
-    //                data.append("fileId", "file")
-    //                $.ajax({
-    //                    type: "POST",
-    //                    url: "/ConferenceRecond/AsyncFileUpload",
-    //                    contentType: false,
-    //                    processData: false,
-    //                    data: data
-    //                }).done(function (data) {
-    //                    $('#file_callback').text(data);
-    //                });
-    //            }
-    //        }
+            var input = $(this).parents('.file-control').find(':text'),
+					log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-    //    });
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+    });
+
 </script>

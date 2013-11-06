@@ -4,11 +4,11 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     font-family: "微軟正黑體" , "Microsoft JhengHei" , "新細明體" , "PMingLiU" , AppleGothic, Dotum, Lucida Grande, Verdana Sans-serif;
     /*color: #fff;*/
     font-size: 14pt;
-    line-height: 22pt;
+    line-height: 18pt;
 }
-body
+.body-color
 {
-    background: #1F497D;
+    background: #1F497D !important;
 }
 /*左方快速連結*/
 .navigation
@@ -18,7 +18,7 @@ body
     padding: 0px;
     top: 120px;
     left: 10px;
-    z-index: 9999;
+    z-index: 1;
     width: 150px;
 }
 .navigation-link
@@ -162,13 +162,17 @@ body
 .content
 {
     margin-top: 40px;
-    background: #2D84AE;
     border: 2px solid #387CCF;
     width: 90%;
     text-align: left;
     padding: 10px;
     margin-left: 3.5%;
     min-width: 805px;
+}
+
+.content-color
+{
+    background: #2D84AE;
 }
 
 .content label{

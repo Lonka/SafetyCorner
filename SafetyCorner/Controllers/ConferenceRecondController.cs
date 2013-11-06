@@ -17,6 +17,7 @@ namespace SafetyCorner.Controllers
         //http://mgcrea.github.io/angular-strap/#/tooltip
         //TODO Linq 比較日期
         //TODO 上傳大小限制
+        //http://www.abeautifulsite.net/blog/2013/08/whipping-file-inputs-into-shape-with-bootstrap-3/
         public ActionResult Index()
         {
             return View();

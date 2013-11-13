@@ -1,10 +1,7 @@
-@import "reset.css";
+/*@import "reset.css";*/
 body, table, p, div, span, form, input, textarea, select, pre, button, a
 {
-    font-family: "微軟正黑體" , "Microsoft JhengHei" , "新細明體" , "PMingLiU" , AppleGothic, Dotum, Lucida Grande, Verdana Sans-serif;
-    /*color: #fff;*/
-    font-size: 14pt;
-    line-height: 18pt;
+    font-family: "微軟正黑體" , "Microsoft JhengHei" , "新細明體" , "PMingLiU" , AppleGothic, Dotum, Lucida Grande, Verdana Sans-serif; /*color: #fff;     font-size: 14pt; line-height: 18pt;*/
 }
 .body-color
 {
@@ -39,7 +36,8 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 {
     display: block;
     text-decoration: none;
-    color:#fff;
+    color: #fff;
+    font-size: 14pt;
 }
 .navigation-link li a:hover
 {
@@ -58,12 +56,11 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 
 .main
 {
-    width: 95%;
-    margin: 0px auto;
+   
+    margin:0 160px;
     _text-align: center;
     text-align: center;
-    margin-left: 160px;
-    min-width: 805px;
+    min-width: 1024px;
 }
 .site-title
 {
@@ -76,7 +73,7 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     text-align: center;
     _text-align: center;
     margin: 0px auto;
-    min-width: 805px;
+    min-width: 1024px;
 }
 .menu-bg
 {
@@ -148,7 +145,8 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    color:#fff;
+    color: #fff;
+    font-size: 14pt;
 }
 .menu-title:hover
 {
@@ -163,11 +161,11 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 {
     margin-top: 40px;
     border: 2px solid #387CCF;
-    width: 90%;
+    width: 100%;
     text-align: left;
     padding: 10px;
-    margin-left: 3.5%;
-    min-width: 805px;
+    
+    min-width: 1024px;
 }
 
 .content-color
@@ -175,15 +173,20 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     background: #2D84AE;
 }
 
-.content label{
-    color:#fff;
+.content label
+{
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.428571429;
 }
 
-.content h2{
-    color:#fff;
+.content h2
+{
+    color: #fff;
 }
 
-.content input{
+.content input
+{
     /*color:#000000 !important;*/
 }
 
@@ -203,11 +206,6 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 }
 
 
-.gridStyle
-    {
-        border: 1px solid rgb(212,212,212);
-        width: 800px;
-        height: 383px;
-    }
+
 
 

@@ -1,115 +1,12 @@
 ﻿<style type="text/css">
-    .gridStyle
-    {
-        border: 1px solid rgb(212,212,212);
-        width: 600px;
-        height: 300px;
-    }
-    
-    .gridStyle div, .gridStyle span, .gridStyle a, .gridStyle select, .gridStyle input
-    {
-        color: #000000 !important;
-    }
-    
-    .green
-    {
-        background-color: Green;
-        color: White;
-    }
 </style>
 <script type="text/javascript">
-    var app = angular.module('myApp', ['ngGrid']);
-    app.controller('MyCtrl', function ($scope, $http) {
-        $scope.mySelections = [];
-
-        //分頁
-        $scope.pagingOptions = {
-            pageSizes: [1, 3, 5],
-            pageSize: 3,
-            currentPage: 1
-        }
-
-        //監視分頁動作
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            //必需要換到不同頁
-            if (newVal !== oldVal || newVal.currentPage !== oldVal.currentPage) {
-                $scope.getPagedDataAsync(newVal.pageSize, newVal.currentPage)
-            }
-        }, true);
-
-        //總數
-        $scope.totalServerItems = 0;
-
-        //設定資料
-        $scope.setPagingData = function (data, page, pageSize) {
-            var pageData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.myData = pageData;
-            $scope.totalServerItems = data.length;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        }
-
-        //動態取資料
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            setTimeout(function () {
-                var queryData;
-                if (searchText) {
-                }
-                else {
-                    queryData = { "name": $scope.name, "age": $scope.age };
-                    $http.post('/Home/Query', queryData).success(function (largeLoad) {
-                        $scope.setPagingData(largeLoad, page, pageSize);
-                    });
-                }
-            }, 100);
-        }
-        //第一次取資料
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-
-
-
-        $scope.gridOptions = { data: 'myData',
-            columnDefs: [{ field: 'name', displayName: 'Name' }
-            , { field: 'age', displayName: 'Age', cellTemplate: '<div ng-class="{green:row.getProperty(col.field) > 30}"><div class="ngCellText">{{row.getProperty(col.field)}}</div></div>' }
-            , { field: 'href', displayName: 'Go', cellTemplate: '<div class="ngCellText"><a href="{{row.getProperty(col.field)}}">{{row.getProperty(\'hrefText\')}}</a></div>'}],
-            selectedItems: $scope.mySelections,
-            multiSelect: false,
-            enablePaging: true,
-            showFooter: true,
-            i18n: "zh-tw",
-            totalServerItems: 'totalServerItems',
-            footerRowHeight: 50,
-            pagingOptions: $scope.pagingOptions,
-            afterSelectionChange: function (data) {
-                if (typeof $scope.mySelections[0] !== "undefined") {
-                    console.log("rowIndex", data.rowIndex);
-                    console.log("selectName", $scope.mySelections[0].name)
-                }
-            }
-        };
-
-        $scope.search = function () {
-            $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-        }
-
-    });
 </script>
 <h2>
     首頁</h2>
 <div style="height: 1000px;">
     <div ng-app="myApp">
         <div ng-controller="MyCtrl">
-            <label>Name:</label>
-            <input type="text" ng-model="name" />
-            <label>Ages More Than:</label>
-            <input type="text" ng-model="age" />
-            <button type="submit" ng-click="search()">Search</button>
-            <div class="gridStyle" ng-grid="gridOptions">
-            </div>
-            <div class="selectedItems">
-                {{mySelections}}</div>
         </div>
     </div>
-    123
 </div>

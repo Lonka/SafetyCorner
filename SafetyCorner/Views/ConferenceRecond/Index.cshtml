@@ -1,8 +1,8 @@
 ﻿@using SafetyCorner.Common
 <!-- TODO Bookstarp form-inline style 
 http://getbootstrap.com/
-calender
-form style
+calender(還是不行)
+form style(font size)
 -->
 <script type="text/javascript">
     var app = angular.module('GridApp', ['ngGrid']);
@@ -35,7 +35,7 @@ form style
         $scope.getPagedDataAsync = function (pageSize, page, searchText) {
             setTimeout(function () {
                 var queryData;
-                queryData = { "fileDate": $scope.fileDate, "fileName": $scope.fileName };
+                queryData = { "fileDate": $('#datatimepicker_value').val(), "fileName": $scope.fileName };
                 //TODO set query data
                 $http.post('/ConferenceRecond/Query', queryData).success(function (largeLoad) {
                     $scope.setPagingData(largeLoad, page, pageSize);
@@ -81,49 +81,15 @@ form style
         };
     })
 
-
-    /*   angular.module('Calendar', ['ui.bootstrap']);
-    var DatepickerDemoCtrl = function ($scope, $timeout) {
-    $scope.today = function () {
-    $scope.dt = new Date();
-    };
-    $scope.today();
-
-    $scope.showWeeks = true;
-    $scope.toggleWeeks = function () {
-    $scope.showWeeks = !$scope.showWeeks;
-    };
-
-    $scope.clear = function () {
-    $scope.dt = null;
-    };
-
-    // Disable weekend selection
-    $scope.disabled = function (date, mode) {
-    return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-    };
-
-    $scope.toggleMin = function () {
-    $scope.minDate = ($scope.minDate) ? null : new Date();
-    };
-    $scope.toggleMin();
-
-    $scope.open = function () {
-    $timeout(function () {
-    $scope.opened = true;
-    });
-    };
-
-    $scope.dateOptions = {
-    'year-format': "'yy'",
-    'starting-day': 1
-    };
-    };
-
-    */
-   
+  
 </script>
 <style type="text/css">
+    .gridStyle
+    {
+        border: 1px solid rgb(212,212,212);
+        width: 100%;
+        height: 383px;
+    }
     .btnFolder
     {
         background: url(../../Content/img/li_icon.png) left center no-repeat;
@@ -166,6 +132,12 @@ form style
 <h2>
     會議記錄</h2>
 <hr />
+@if (TempData["message"] != null)
+{
+    
+    @TempData["message"]
+   
+}
 <div id="FileUpload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog ">
@@ -173,6 +145,7 @@ form style
             <div class="modal-header">
                 上傳檔案
             </div>
+            <!-- /modal-header -->
             @using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
             { 
                 <div class="modal-body">
@@ -188,64 +161,70 @@ form style
                             </div>
                             <!-- /input-group -->
                         </div>
+                        <!-- /file-control -->
                     </div>
-                </div>
+                    <!-- /form-group -->
+                </div> <!-- /modal-body -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        關閉</button>
                     <button type="submit" class="btn btn-primary">
                         上傳</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        關閉</button>
                 </div>
+                <!-- /modal-footer -->
             }
         </div>
+        <!-- /modal-content -->
     </div>
+    <!-- /modal-dialog -->
 </div>
-@*<div ng-app="Calendar">
-    <div ng-controller="DatepickerDemoCtrl">
-        <input type="text" ng-model="dt" datepicker-popup="dd-MMMM-yyyy" is-open="opened"
-            min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-            ng-required="true" />
-        <button class="btn" ng-click="open()">
-            <i class="icon-calendar"></i>
-        </button>
-    </div>
-</div>*@
-<div ng-app="GridApp" class="form-inline">
-    <div ng-controller="FormCtrl">
-        <label>
-            日期：</label>
-        <input type="text" ng-model="fileDate" />
-        <label>
-            內容：</label>
-        <input type="text" ng-model="fileName" />
-        <button type="submit" ng-click="search()">
-            查詢</button>
-        <button type="button" data-toggle="modal" data-target="#FileUpload">
-            上傳檔案</button>
+<!-- /FileUpload -->
+<div ng-app="GridApp">
+    <div ng-controller="FormCtrl ">
+        <div class="row form-group form-horizontal ">
+            <label class="col-md-1 control-label">
+                日期：</label>
+            <div class="col-md-3">
+                <div id="datetimepicker1" class="input-group">
+                    <input id="datatimepicker_value" data-format="yyyy/MM/dd" type="text" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default add-on">
+                            <span class=" glyphicon glyphicon-calendar"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <label class="col-md-1 control-label">
+                內容：</label>
+            <div class="col-md-3">
+                <input type="text" ng-model="fileName" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-default" ng-click="search()">
+                    查詢</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#FileUpload">
+                    上傳檔案</button>
+            </div>
+        </div>
         <div class="gridStyle" ng-grid="gridOptions">
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).on('change', '.btn-file :file', function () {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        var input = $(this), numFiles = input.get(0).files ? input.get(0).files.length
+: 1, label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [numFiles, label]);
     });
+
     $(document).ready(function () {
         $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
-
             var input = $(this).parents('.file-control').find(':text'),
-					log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log) alert(log);
-            }
-
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+            if (input.length) { input.val(log); } else { if (log) alert(log); }
         });
-    });
 
-</script>
+        $('#datetimepicker1').datetimepicker({
+            language: 'zh_tw'
+        });
+    }); </script>

@@ -26,10 +26,15 @@ namespace SafetyCorner.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
+
             if (file != null && file.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/Files/ConferenceReconds"), fileName);
+                if (!Directory.Exists(Server.MapPath("~/Files/ConferenceReconds")))
+                {
+                    Directory.CreateDirectory(Server.MapPath("~/Files/ConferenceReconds"));
+                }
                 try
                 {
                     file.SaveAs(path);
@@ -45,7 +50,7 @@ namespace SafetyCorner.Controllers
                 }
                 catch (Exception e)
                 {
-                    //TODO Exception
+                    TempData["message"] += e.Message;
                 }
             }
             return RedirectToAction("Index");
@@ -57,8 +62,10 @@ namespace SafetyCorner.Controllers
             var data = db.GetAll();
             if (!string.IsNullOrEmpty(fileDate))
             {
-                string fileDateString = DateTime.Parse(fileDate).ToString("yyyyMMdd");
-                data = db.GetSome(data, item => item.Create_Date.Value.Equals(fileDateString));
+                DateTime date = DateTime.Parse(fileDate);
+                data = db.GetSome(data, item => item.Create_Date.Value.Year.Equals (date.Year)
+                                                && item.Create_Date.Value.Month.Equals(date.Month)
+                                                && item.Create_Date.Value.Day.Equals (date.Day));
             }
 
             if (!string.IsNullOrEmpty(fileName))
@@ -71,7 +78,7 @@ namespace SafetyCorner.Controllers
         }
 
         [HttpPost]
-        public ActionResult AsyncFileUpload(HttpPostedFileBase file,string fileId)
+        public ActionResult AsyncFileUpload(HttpPostedFileBase file, string fileId)
         {
             //var fileName = Path.GetFileName(file.FileName);
             //var path = Path.Combine(Server.MapPath("~/Files/ConferenceReconds"), fileName);

@@ -101,6 +101,8 @@ form style(font size)
     {
         position: relative;
         overflow: hidden;
+        cursor: pointer;
+        display: inline-block;
     }
     .btn-file input[type=file]
     {
@@ -111,22 +113,16 @@ form style(font size)
         min-height: 100%;
         font-size: 999px;
         text-align: right;
-        filter: alpha(opacity=0);
         opacity: 0;
-        background: red;
+        -moz-opacity: 0;
+        filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0) background: red;
         cursor: inherit;
-        display: block;
     }
     
     input[readonly]
     {
         background-color: white !important;
         cursor: text !important;
-    }
-    .modal label
-    {
-        color: Black;
-        font-weight: 300;
     }
 </style>
 <h2>
@@ -138,73 +134,47 @@ form style(font size)
     @TempData["message"]
    
 }
-<div id="FileUpload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                上傳檔案
-            </div>
-            <!-- /modal-header -->
-            @using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            { 
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="col-sm-3">
-                            檔案名稱：</label>
-                        <div class="col-sm-7 file-control">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-sm" readonly="">
-                                <span class="input-group-btn"><span class="btn-primary btn-file btn btn-sm">請選擇
-                                    <input name="file" id="file" type="file" multiple="">
-                                </span></span>
-                            </div>
-                            <!-- /input-group -->
-                        </div>
-                        <!-- /file-control -->
-                    </div>
-                    <!-- /form-group -->
-                </div> <!-- /modal-body -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        上傳</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        關閉</button>
-                </div>
-                <!-- /modal-footer -->
-            }
-        </div>
-        <!-- /modal-content -->
+@using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{ 
+                
+    <label>
+        檔案名稱：</label>
+    <div class="file-control">
+        <input type="text" readonly="" />
+        <span><span class="btn-file">請選擇
+            <input name="file" id="file" type="file" />
+        </span></span>
     </div>
-    <!-- /modal-dialog -->
-</div>
-<!-- /FileUpload -->
+    <!-- /file-control -->
+    <button type="submit">
+        上傳</button>
+    <button type="button">
+        關閉</button>
+}
 <div ng-app="GridApp">
     <div ng-controller="FormCtrl ">
-        <div class="row form-group form-horizontal ">
-            <label class="col-md-1 control-label">
-                日期：</label>
-            <div class="col-md-3">
-                <div id="datetimepicker1" class="input-group">
-                    <input id="datatimepicker_value" data-format="yyyy/MM/dd" type="text" class="form-control" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default add-on">
-                            <span class=" glyphicon glyphicon-calendar"></span>
-                        </button>
-                    </span>
-                </div>
+        <label>
+            日期：</label>
+        <div>
+            <div id="datetimepicker1" class="input-group">
+                <input id="datatimepicker_value" data-format="yyyy/MM/dd" type="text" />
+                @*                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default add-on">
+                        <span class=" glyphicon glyphicon-calendar"></span>
+                    </button>
+                </span>*@
             </div>
-            <label class="col-md-1 control-label">
-                內容：</label>
-            <div class="col-md-3">
-                <input type="text" ng-model="fileName" class="form-control" />
-            </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-default" ng-click="search()">
-                    查詢</button>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#FileUpload">
-                    上傳檔案</button>
-            </div>
+        </div>
+        <label>
+            內容：</label>
+        <div>
+            <input type="text" ng-model="fileName" />
+        </div>
+        <div>
+            <button type="submit" ng-click="search()">
+                查詢</button>
+            <button type="button">
+                上傳檔案</button>
         </div>
         <div class="gridStyle" ng-grid="gridOptions">
         </div>
@@ -224,7 +194,7 @@ form style(font size)
             if (input.length) { input.val(log); } else { if (log) alert(log); }
         });
 
-        $('#datetimepicker1').datetimepicker({
-            language: 'zh_tw'
-        });
+//        $('#datetimepicker1').datetimepicker({
+//            language: 'zh_tw'
+//        });
     }); </script>

@@ -3,29 +3,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>@*http://kkbruce.tw/*@ @*    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">  *@
-    @*    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+    <title>@ViewBag.Title</title>@*http://kkbruce.tw/*@ @*    
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet">  *@
     <!-- Latest compiled and minified JavaScript -->
-    @Styles.Render("~/Content/css")*@
+    <!-- Latest compiled and minified CSS -->
+    @*<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    @Styles.Render("~/Content/bootstrap.min.css")    
+    @Styles.Render("~/Content/bootstrap-theme.min.css")
+    @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")*@
+    @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/reset.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/ng-grid.min.css")
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
-    @*@Styles.Render("~/Content/bootstrap.min.css")    
-    @Styles.Render("~/Content/bootstrap-theme.min.css")*@
-    @Styles.Render("~/Content/bootstrap-datetimepicker.min.css")
-   @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/main.js")
     @Scripts.Render("~/Scripts/angular.min.js")
     @Scripts.Render("~/Scripts/ng-grid-2.0.7.min.js")
-    @*@Scripts.Render("~/Scripts/ui-bootstrap-tpls-0.6.0.min.js")*@
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-    @*@Scripts.Render("~/Scripts/bootstrap.min.js")*@
-    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")
     @RenderSection("scripts", required: false)
+    @*@Scripts.Render("~/Scripts/ui-bootstrap-tpls-0.6.0.min.js")
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @Scripts.Render("~/Scripts/bootstrap-datetimepicker.min.js")*@
 </head>
 <body class="body-color">
     <div class="menu-bg">

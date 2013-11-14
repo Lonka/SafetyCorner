@@ -56,16 +56,16 @@ namespace SafetyCorner.Controllers
             return RedirectToAction("Index");
         }
 
-        public string Query(string fileDate, string fileName)
+        public JsonResult Query(string fileDate, string fileName, int? page, int? rows,string sidx, string sord)
         {
             FileListRepository db = new FileListRepository();
             var data = db.GetAll();
             if (!string.IsNullOrEmpty(fileDate))
             {
                 DateTime date = DateTime.Parse(fileDate);
-                data = db.GetSome(data, item => item.Create_Date.Value.Year.Equals (date.Year)
+                data = db.GetSome(data, item => item.Create_Date.Value.Year.Equals(date.Year)
                                                 && item.Create_Date.Value.Month.Equals(date.Month)
-                                                && item.Create_Date.Value.Day.Equals (date.Day));
+                                                && item.Create_Date.Value.Day.Equals(date.Day));
             }
 
             if (!string.IsNullOrEmpty(fileName))
@@ -73,8 +73,33 @@ namespace SafetyCorner.Controllers
                 data = db.GetSome(data, item => item.File_Name.IndexOf(fileName) > -1);
             }
 
-            data = data.OrderByDescending(item => item.Create_Date);
-            return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            var field = typeof(FileList).GetProperty(sidx);
+
+            var dataList = data.ToList();
+            if (sord.Equals("asc"))
+            {
+                dataList = dataList.OrderBy(item => field.GetValue(item, null)).ToList();
+            }
+            else if(sord.Equals("desc"))
+            {
+                dataList = dataList.OrderByDescending(item => field.GetValue(item, null)).ToList();
+            }
+            //data = data.OrderByDescending(item => item.Create_Date);
+            int pageSize = rows.HasValue ? rows.Value : 10;
+            int pageNum = page.HasValue ? page.Value : 1;
+            int totalRecords = dataList.Count;
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageNum,
+                records = totalRecords,
+                rows = dataList.Skip((pageNum - 1) * pageSize).Take(pageSize)
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+            //return Newtonsoft.Json.JsonConvert.SerializeObject(data);
         }
 
         [HttpPost]

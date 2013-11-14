@@ -5,91 +5,10 @@ calender(還是不行)
 form style(font size)
 -->
 <script type="text/javascript">
-    var app = angular.module('GridApp', ['ngGrid']);
-    app.filter('bytes', function () {
-        return function (bytes, precision) {
-            if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
-            if (typeof precision === 'undefined') precision = 1;
-            var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-			number = Math.floor(Math.log(bytes) / Math.log(1024));
-            return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
-        }
-    });
-    app.controller('FormCtrl', function ($scope, $http, $timeout) {
-        //分頁
-        $scope.pagingOptions = {
-            pageSizes: [10, 25, 50],
-            pageSize: 10,
-            currentPage: 1
-        }
-
-        //監視分頁動作
-        $scope.$watch('pagingOptions', function (newVal, oldVal) {
-            //必需要換到不同頁
-            if (newVal !== oldVal || newVal.currentPage !== oldVal.currentPage) {
-                $scope.getPagedDataAsync(newVal.pageSize, newVal.currentPage)
-            }
-        }, true);
-
-        //動態取資料
-        $scope.getPagedDataAsync = function (pageSize, page, searchText) {
-            setTimeout(function () {
-                var queryData;
-                queryData = { "fileDate": $('#datatimepicker_value').val(), "fileName": $scope.fileName };
-                //TODO set query data
-                $http.post('/ConferenceRecond/Query', queryData).success(function (largeLoad) {
-                    $scope.setPagingData(largeLoad, page, pageSize);
-                });
-            }, 100);
-        }
-
-        //第一次取資料
-        $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-
-        //設定資料
-        $scope.setPagingData = function (data, page, pageSize) {
-            var pageData = data.slice((page - 1) * pageSize, page * pageSize);
-            $scope.myData = pageData;
-            $scope.totalServerItems = data.length;
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
-        }
-
-        $scope.search = function () {
-            $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-        }
-
-        $scope.gridOptions = { data: 'myData',
-            columnDefs: [{ field: 'Create_Date', width: '140px', displayName: '日期', cellTemplate: '<div class="ngCellText">{{row.getProperty(col.field)|date:\'yyyy-MM-dd\'}}</div>' }
-			, { field: 'File_Size', width: '120px', displayName: '檔案大小', cellTemplate: '<div class="ngCellText">{{row.getProperty(col.field)|bytes}}</div>' }
-			, { field: 'File_Name', displayName: '內容', cellTemplate: '<div class="ngCellText"><a href="{{row.getProperty(\'File_Root\')}}">{{row.getProperty(col.field)}}</a></div>'}],
-            multiSelect: false,
-            enablePaging: true,
-            showFooter: true,
-            enableRowSelection: false,
-            i18n: "zh-tw",
-            totalServerItems: 'totalServerItems',
-            footerRowHeight: 50,
-            pagingOptions: $scope.pagingOptions,
-            afterSelectionChange: function (data) {
-                if (typeof $scope.mySelections[0] !== "undefined") {
-                    console.log("rowIndex", data.rowIndex);
-                    console.log("selectName", $scope.mySelections[0].name)
-                }
-            }
-        };
-    })
-
+  
   
 </script>
 <style type="text/css">
-    .gridStyle
-    {
-        border: 1px solid rgb(212,212,212);
-        width: 100%;
-        height: 383px;
-    }
     .btnFolder
     {
         background: url(../../Content/img/li_icon.png) left center no-repeat;
@@ -127,16 +46,15 @@ form style(font size)
 </style>
 <h2>
     會議記錄</h2>
-<hr />
 @if (TempData["message"] != null)
 {
-    
+	
     @TempData["message"]
    
 }
 @using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
 { 
-                
+				
     <label>
         檔案名稱：</label>
     <div class="file-control">
@@ -146,24 +64,15 @@ form style(font size)
         </span></span>
     </div>
     <!-- /file-control -->
-    <button type="submit">
-        上傳</button>
-    <button type="button">
-        關閉</button>
+    <input type="submit" value="上傳" />
+    <input type="button" value="關閉" />
 }
-<div ng-app="GridApp">
-    <div ng-controller="FormCtrl ">
+<div ng-app>
+    <div ng-controller="FormCtrl">
         <label>
             日期：</label>
         <div>
-            <div id="datetimepicker1" class="input-group">
-                <input id="datatimepicker_value" data-format="yyyy/MM/dd" type="text" />
-                @*                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default add-on">
-                        <span class=" glyphicon glyphicon-calendar"></span>
-                    </button>
-                </span>*@
-            </div>
+            <input id="datepicker" ng-model="fileDate" data-format="yyyy/MM/dd" type="text" />
         </div>
         <label>
             內容：</label>
@@ -171,12 +80,12 @@ form style(font size)
             <input type="text" ng-model="fileName" />
         </div>
         <div>
-            <button type="submit" ng-click="search()">
-                查詢</button>
-            <button type="button">
-                上傳檔案</button>
+            <input type="submit" ng-click="search()" value="查詢" />
+            <input type="button" value="上傳檔案" />
         </div>
-        <div class="gridStyle" ng-grid="gridOptions">
+        <table id="grid">
+        </table>
+        <div id="pager">
         </div>
     </div>
 </div>
@@ -190,11 +99,56 @@ form style(font size)
     $(document).ready(function () {
         $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
             var input = $(this).parents('.file-control').find(':text'),
-            log = numFiles > 1 ? numFiles + ' files selected' : label;
+			log = numFiles > 1 ? numFiles + ' files selected' : label;
             if (input.length) { input.val(log); } else { if (log) alert(log); }
         });
 
-//        $('#datetimepicker1').datetimepicker({
-//            language: 'zh_tw'
-//        });
-    }); </script>
+        $("#datepicker").datepicker();
+
+
+
+        var grid = $('#grid');
+        grid.jqGrid({
+            url: '/ConferenceRecond/Query/',
+            datatype: 'json',
+            jsonReader: {
+                repeatitems: false
+            },
+            mtype: 'GET',
+            colModel: [
+				{ name: 'Create_Date', label: '日期', width: 40, align: 'left', formatter: dateDisplay },
+				{ name: 'File_Size', label: '檔案大小', width: 40, align: 'left', formatter: fileSizeDisplay },
+				{ name: 'File_Name', label: '內容', width: 40, align: 'left', formatter: downloadDisplay },
+			],
+            pager: '#pager',
+            width: 800,
+            height: 'auto',
+            rowNum: 10,
+            rowList: [5, 10, 20, 50],
+            sortname: 'Create_Date',
+            sortorder: "desc",
+            viewrecords: true,
+            caption: '會議記錄列表'
+        });
+
+        function dateDisplay(cellvalue, options, rowObject) {
+            var date = new Date(parseInt(cellvalue.substr(6)));
+            return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate();
+        }
+        function fileSizeDisplay(cellvalue, options, rowObject) {
+            if (isNaN(parseFloat(cellvalue)) || !isFinite(cellvalue)) return '-';
+            if (typeof precision === 'undefined') precision = 1;
+            var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+			number = Math.floor(Math.log(cellvalue) / Math.log(1024));
+            return (cellvalue / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
+        }
+        function downloadDisplay(cellvalue, options, rowObject) {
+            return '<a href="' + rowObject.File_Root + '">' + cellvalue + '</a>'
+        }
+
+    });
+
+    function FormCtrl($scope) {
+
+    }
+</script>

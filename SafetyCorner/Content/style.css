@@ -56,8 +56,7 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 
 .main
 {
-   
-    margin:0 160px;
+    margin: 0 160px;
     _text-align: center;
     text-align: center;
     min-width: 1024px;
@@ -124,6 +123,7 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     color: #000;
     font-size: 12pt;
     margin-left: 10px;
+    padding: 5px 0;
 }
 .menu-list li:hover
 {
@@ -164,7 +164,6 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     width: 100%;
     text-align: left;
     padding: 10px;
-    
     min-width: 1024px;
 }
 
@@ -183,11 +182,20 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
 .content h2
 {
     color: #fff;
+    font-weight: 700;
+    font-size: 20px;
+     line-height: 1.428571429;
+    padding: 0 0 5px;
+    margin: 0 1% 10px 0;
+    text-align: left;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 1px rgba(20,20,20,0.5);
 }
 
 .content input
 {
-    /*color:#000000 !important;*/
+    font-size: 16px;
+    line-height: 1.428571429; /*color:#000000 !important;*/
 }
 
 .content-fixed

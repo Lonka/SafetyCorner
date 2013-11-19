@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.IO;
 using SafetyCorner.Models.Repository;
 using SafetyCorner.Models;
+using SafetyCorner.ViewModels;
 
 namespace SafetyCorner.Controllers
 {
@@ -56,21 +57,22 @@ namespace SafetyCorner.Controllers
             return RedirectToAction("Index");
         }
 
-        public JsonResult Query(string fileDate, string fileName, int? page, int? rows,string sidx, string sord)
+        [HttpPost]
+        public JsonResult Query(ConferenceRecondSearch searchCondition , int? page, int? rows,string sidx, string sord)
         {
             FileListRepository db = new FileListRepository();
             var data = db.GetAll();
-            if (!string.IsNullOrEmpty(fileDate))
+            if (!string.IsNullOrEmpty(searchCondition.FileDate))
             {
-                DateTime date = DateTime.Parse(fileDate);
+                DateTime date = DateTime.Parse(searchCondition.FileDate);
                 data = db.GetSome(data, item => item.Create_Date.Value.Year.Equals(date.Year)
                                                 && item.Create_Date.Value.Month.Equals(date.Month)
                                                 && item.Create_Date.Value.Day.Equals(date.Day));
             }
 
-            if (!string.IsNullOrEmpty(fileName))
+            if (!string.IsNullOrEmpty(searchCondition.FileName))
             {
-                data = db.GetSome(data, item => item.File_Name.IndexOf(fileName) > -1);
+                data = db.GetSome(data, item => item.File_Name.IndexOf(searchCondition.FileName) > -1);
             }
 
             var field = typeof(FileList).GetProperty(sidx);

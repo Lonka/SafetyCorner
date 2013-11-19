@@ -12,7 +12,9 @@ namespace SafetyCorner
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.js"
+                        , "~/Scripts/i18n/jquery.ui.datepicker-zh-TW.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqGrid").Include(
                         "~/Scripts/jquery.jqGrid.src.js",

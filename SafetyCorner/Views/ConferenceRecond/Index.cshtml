@@ -3,6 +3,9 @@
 http://getbootstrap.com/
 calender(還是不行)
 form style(font size)
+
+
+11/18搞不定jquery ui && angular
 -->
 <script type="text/javascript">
   
@@ -22,6 +25,8 @@ form style(font size)
         overflow: hidden;
         cursor: pointer;
         display: inline-block;
+        height: 22px;
+        margin-top: -4px;
     }
     .btn-file input[type=file]
     {
@@ -43,6 +48,11 @@ form style(font size)
         background-color: white !important;
         cursor: text !important;
     }
+    
+    .inline
+    {
+        display: inline;
+    }
 </style>
 <h2>
     會議記錄</h2>
@@ -52,37 +62,35 @@ form style(font size)
     @TempData["message"]
    
 }
-@using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{ 
+<div id="dialog_Upload">
+    @using (@Html.BeginForm("Upload", "ConferenceRecond", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    { 
 				
-    <label>
-        檔案名稱：</label>
-    <div class="file-control">
-        <input type="text" readonly="" />
-        <span><span class="btn-file">請選擇
-            <input name="file" id="file" type="file" />
-        </span></span>
-    </div>
-    <!-- /file-control -->
-    <input type="submit" value="上傳" />
-    <input type="button" value="關閉" />
-}
-<div ng-app>
+        <label>
+            檔案名稱</label>
+        <div class="file-control">
+            <input type="text" readonly="" />
+            <span><span id="button_FolderOpener" class="btn-file">
+                <input name="file" id="file" type="file" />
+            </span></span>
+        </div>
+        <!-- /file-control -->
+        <div class="tc">
+            <input type="submit" value="上傳" />
+            <input id="button_close" type="button" value="關閉" />
+        </div>
+    }
+</div>
+<div id="ng-app" ng-app="conferenceApp">
     <div ng-controller="FormCtrl">
         <label>
             日期：</label>
-        <div>
-            <input id="datepicker" ng-model="fileDate" data-format="yyyy/MM/dd" type="text" />
-        </div>
+        <input id="datepicker" ng-model="fileDate" type="text" datepicker />
         <label>
             內容：</label>
-        <div>
-            <input type="text" ng-model="fileName" />
-        </div>
-        <div>
-            <input type="submit" ng-click="search()" value="查詢" />
-            <input type="button" value="上傳檔案" />
-        </div>
+        <input type="text" ng-model="fileName" />
+        <input type="submit" ng-click="search()" value="查詢" />
+        <input id="button_Opener" type="button" value="上傳檔案" />
         <table id="grid">
         </table>
         <div id="pager">
@@ -93,47 +101,107 @@ form style(font size)
     $(document).on('change', '.btn-file :file', function () {
         var input = $(this), numFiles = input.get(0).files ? input.get(0).files.length
 : 1, label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        input.trigger('fileselect', [numFiles, label]);
+        var input = $(this).parents('.file-control').find(':text'),
+			log = numFiles > 1 ? numFiles + ' files selected' : label;
+        if (input.length) { input.val(log); } else { if (log) alert(log); }
     });
 
     $(document).ready(function () {
-        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
-            var input = $(this).parents('.file-control').find(':text'),
-			log = numFiles > 1 ? numFiles + ' files selected' : label;
-            if (input.length) { input.val(log); } else { if (log) alert(log); }
+
+        $("#button_FolderOpener").button({
+            icons: {
+                primary: "ui-icon-folder-open"
+            },
+            text: false
         });
 
-        $("#datepicker").datepicker();
-
-
-
-        var grid = $('#grid');
-        grid.jqGrid({
-            url: '/ConferenceRecond/Query/',
-            datatype: 'json',
-            jsonReader: {
-                repeatitems: false
+        $("#dialog_Upload").dialog({
+            resizable: false,
+            height: 130,
+            autoOpen: false,
+            show: {
+                effect: "drop",
+                direction: "up",
+                duration: 300
             },
-            mtype: 'GET',
-            colModel: [
+            hide: {
+                effect: "explode",
+                duration: 300
+            }
+        });
+
+        $("#button_close").click(function () {
+            $("#dialog_Upload").dialog("close");
+        });
+
+        $("#dialog_Upload").dialog("option", "modal", true);
+
+        $("#button_Opener").click(function () {
+            $("#dialog_Upload").dialog("open");
+        });
+
+
+    });
+
+
+    var app = angular.module('conferenceApp', []);
+    app.directive('datepicker', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                $(function () {
+                    element.datepicker({
+                        dateFormat: 'yy/mm/dd',
+                        onSelect: function (date) {
+                            ngModelCtrl.$setViewValue(date);
+                            scope.$apply();
+                        }
+                    });
+                });
+            }
+        }
+    });
+    app.controller('FormCtrl', function ($scope) {
+        doSearch();
+        var firstClick = true;
+        function doSearch() {
+            var grid = $('#grid');
+            if (!firstClick) {
+                grid.trigger("reloadGrid");
+            }
+            firstClick = false;
+            grid.jqGrid({
+                url: '/ConferenceRecond/Query/',
+                datatype: 'json',
+                jsonReader: {
+                    repeatitems: false
+                },
+                mtype: 'POST',
+                postData: {
+                    fileDate: function () { return $scope.fileDate == undefined ? '' : $scope.fileDate },
+                    fileName: function () { return $scope.fileName == undefined ? '' : $scope.fileName }
+                },
+                colModel: [
 				{ name: 'Create_Date', label: '日期', width: 40, align: 'left', formatter: dateDisplay },
 				{ name: 'File_Size', label: '檔案大小', width: 40, align: 'left', formatter: fileSizeDisplay },
 				{ name: 'File_Name', label: '內容', width: 40, align: 'left', formatter: downloadDisplay },
 			],
-            pager: '#pager',
-            width: 800,
-            height: 'auto',
-            rowNum: 10,
-            rowList: [5, 10, 20, 50],
-            sortname: 'Create_Date',
-            sortorder: "desc",
-            viewrecords: true,
-            caption: '會議記錄列表'
-        });
+                pager: '#pager',
+                width: 800,
+                height: 'auto',
+                rowNum: 10,
+                rowList: [5, 10, 20, 50],
+                sortname: 'Create_Date',
+                sortorder: "desc",
+                viewrecords: true,
+                caption: '會議記錄列表'
+            });
+        }
 
         function dateDisplay(cellvalue, options, rowObject) {
             var date = new Date(parseInt(cellvalue.substr(6)));
-            return date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate();
+            return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
         }
         function fileSizeDisplay(cellvalue, options, rowObject) {
             if (isNaN(parseFloat(cellvalue)) || !isFinite(cellvalue)) return '-';
@@ -143,12 +211,10 @@ form style(font size)
             return (cellvalue / Math.pow(1024, Math.floor(number))).toFixed(precision) + ' ' + units[number];
         }
         function downloadDisplay(cellvalue, options, rowObject) {
-            return '<a href="' + rowObject.File_Root + '">' + cellvalue + '</a>'
+            return '<a href="' + rowObject.File_Root + '" download>' + cellvalue + '</a>'
         }
 
+        $scope.search = doSearch;
     });
 
-    function FormCtrl($scope) {
-
-    }
 </script>

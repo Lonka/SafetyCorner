@@ -184,7 +184,7 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     color: #fff;
     font-weight: 700;
     font-size: 20px;
-     line-height: 1.428571429;
+    line-height: 1.428571429;
     padding: 0 0 5px;
     margin: 0 1% 10px 0;
     text-align: left;
@@ -213,6 +213,38 @@ body, table, p, div, span, form, input, textarea, select, pre, button, a
     float: right;
 }
 
+.tl
+{
+    text-align: left;
+}
+
+.tc
+{
+    text-align: center;
+}
+
+.tr
+{
+    text-align: right;
+}
+
+
+.ui-jqgrid .ui-jqgrid-title
+{
+    font-size: 16px;
+}
+.ui-jqgrid-sortable
+{
+    font-size: 16px;
+}
+.ui-jqgrid tr.jqgrow td
+{
+    font-size: 16px;
+}
+.ui-jqgrid .loading
+{
+    font-size: 16px;
+}
 
 
 
